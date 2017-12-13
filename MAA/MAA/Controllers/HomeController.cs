@@ -10,9 +10,11 @@ namespace MAA.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        public IActionResult Index([FromServices] MaaContext maaContext)
         {
-            return View();
+            Dictionary<long, double> interestDictionary = Interest.GetAll(maaContext);
+            ViewBag.VBInterestList = interestDictionary;
+            return View("Application");
         }
 
         public IActionResult About()
@@ -98,9 +100,28 @@ namespace MAA.Controllers
             return View("Application", mortgageApprovalApplication);
         }
 
+        public IActionResult List([FromServices] MaaContext maaContext)
+        {
+            var applications = from application in maaContext.MortgageApprovalApplication
+                orderby application.Id descending
+                select application;
+
+            return View(applications.ToList());
+        }
+
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public IActionResult Details()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IActionResult Delete()
+        {
+            throw new NotImplementedException();
         }
     }
 }

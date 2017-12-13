@@ -1,0 +1,61 @@
+﻿@model IEnumerable<MAA.Models.MortgageApprovalApplication>
+
+@{
+    ViewData["Title"] = "View";
+}
+
+<h2>View</h2>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ValueOfHome)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LoanAmount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TermOfLoan)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.InterestId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MonthlyRepayment)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreationDatetime)
+        </th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ValueOfHome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LoanAmount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TermOfLoan)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.InterestId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MonthlyRepayment)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreationDatetime)
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
