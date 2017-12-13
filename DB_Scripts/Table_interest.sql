@@ -1,0 +1,21 @@
+USE [Maa]
+GO
+
+/****** Object:  Table [dbo].[interest]    Script Date: 12/13/2017 8:29:40 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[interest](
+	[id] [bigint] IDENTITY(1,1) NOT NULL,
+	[rate] [float] NOT NULL,
+ CONSTRAINT [PK_interest] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+
