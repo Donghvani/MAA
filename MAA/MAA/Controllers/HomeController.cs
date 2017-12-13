@@ -54,7 +54,49 @@ namespace MAA.Controllers
             mortgageApprovalApplication.MonthlyRepayment = Helper.Truncate2DecimalPoints((decimal)monthlyPayment);
 
             return View("Application", mortgageApprovalApplication);
-        }        
+        }
+
+        public IActionResult Submit([FromServices] MaaContext maaContext, MortgageApprovalApplication mortgageApprovalApplication)
+        {
+            Dictionary<long, double> interestDictionary = Interest.GetAll(maaContext);
+            ViewBag.VBInterestList = interestDictionary;
+            if (!interestDictionary.ContainsKey(mortgageApprovalApplication.InterestId))
+            {
+                return View("Application");
+            }
+            double interestRate = interestDictionary[mortgageApprovalApplication.InterestId];
+
+            double monthlyPayment = Helper.CalculateMonthlyPayments(
+                (double)mortgageApprovalApplication.LoanAmount,
+                interestRate,
+                mortgageApprovalApplication.TermOfLoan);
+
+            if (mortgageApprovalApplication.MonthlyRepayment == Helper.Truncate2DecimalPoints((decimal)monthlyPayment))
+            {
+                //submit here
+                maaContext.MortgageApprovalApplication.Add(mortgageApprovalApplication);
+                maaContext.SaveChanges();
+                //Reset model and set message
+                mortgageApprovalApplication = new MortgageApprovalApplication
+                {
+                    Message =
+                        $"Quote No {mortgageApprovalApplication.Id}   " +
+                        $"(Value of Home = {mortgageApprovalApplication.ValueOfHome}; " +
+                        $"Loan Amount = {mortgageApprovalApplication.LoanAmount}; " +
+                        $"Term of Loan = {mortgageApprovalApplication.TermOfLoan}; " +
+                        $"Interest on Loan = {interestRate}; " +
+                        $"Monthly Repayment = {mortgageApprovalApplication.MonthlyRepayment})"
+                };
+                ModelState.Clear();
+            }
+            else
+            {
+                mortgageApprovalApplication.MonthlyRepayment = Helper.Truncate2DecimalPoints((decimal)monthlyPayment);
+                mortgageApprovalApplication.Message = "Monthly Repayment recalculated, please submit again";
+            }
+
+            return View("Application", mortgageApprovalApplication);
+        }
 
         public IActionResult Error()
         {
