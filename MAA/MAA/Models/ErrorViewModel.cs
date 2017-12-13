@@ -1,6 +1,6 @@
 using System;
 
-namespace MMA.Models
+namespace MAA.Models
 {
     public class ErrorViewModel
     {

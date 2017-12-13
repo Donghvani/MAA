@@ -4,9 +4,9 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using MMA.Models;
+using MAA.Models;
 
-namespace MMA.Controllers
+namespace MAA.Controllers
 {
     public class HomeController : Controller
     {

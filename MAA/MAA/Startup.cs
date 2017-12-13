@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MAA.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace MMA
+namespace MAA
 {
     public class Startup
     {
@@ -22,6 +24,9 @@ namespace MMA
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+
+            var connection = Configuration.GetConnectionString("MaaDB");
+            services.AddDbContext<MaaContext>(options => options.UseSqlServer(connection));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
