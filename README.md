@@ -17,3 +17,6 @@ https://launchbylunch.com/posts/2014/Feb/16/sql-naming-conventions/
 ## Useful scripts
 1. Database first approach -> generate entities from Database
 Scaffold-DbContext "Server=localhost\SQLEXPRESS;Database=maa;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models
+
+## Database
+See database creation scripts in "DB_Scripts" directory
