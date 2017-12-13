@@ -1,0 +1,64 @@
+﻿@model MAA.Models.MortgageApprovalApplication
+
+@{
+    ViewData["Title"] = "Application";
+    decimal monthlyRepayment = Model?.MonthlyRepayment ?? 0;
+    bool calculated = monthlyRepayment != 0;
+    string message = Model?.Message ?? "";
+}
+
+<h4>Mortgage Approval Application</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form id="applicationForm" asp-action="Calculate">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @if (message.Length > 0)
+            {
+                <div class="form-group">
+                    <span style="color:red;font-weight:bold">@message</span>
+                </div>
+            }
+            <div class="form-group">
+                <label asp-for="ValueOfHome" class="control-label">Value Of Home</label>
+                <input asp-for="ValueOfHome" class="form-control" />
+                <span asp-validation-for="ValueOfHome" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LoanAmount" class="control-label">Loan Amount</label>
+                <input asp-for="LoanAmount" class="form-control" />
+                <span asp-validation-for="LoanAmount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TermOfLoan" class="control-label">Term Of Loan</label>
+                <input asp-for="TermOfLoan" class="form-control" />
+                <span asp-validation-for="TermOfLoan" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="InterestId" class="control-label">Interest</label>
+                @Html.DropDownListFor(model => model.InterestId, new SelectList(((Dictionary<long, double>)ViewBag.VBInterestList).Select(x => new { Value = x.Key, Text = x.Value }), "Value", "Text"), "Select Rate", new { @class = "form-control" })
+                <span asp-validation-for="InterestId" class="text-danger"></span>
+            </div>
+            @if (calculated)
+            {
+                <div id="MonthlyRepaymentDiv" class="form-group">
+                    <label asp-for="MonthlyRepayment" class="control-label">Monthly Repayment</label>
+                    <input asp-for="MonthlyRepayment" value="@monthlyRepayment" class="form-control" readonly />
+                </div>
+            }
+            <div id="Calculate" class="form-group" data-flag="calc">
+                <input type="submit" value="Calculate" formaction="/home/Calculate" class="btn btn-default" />
+            </div>
+            @if (calculated)
+            {
+                <div id="SubmitButton" class="form-group">
+                    <input type="submit" value="Submit For Approval" formaction="/home/Submit" class="btn btn-default" />
+                </div>
+            }
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
