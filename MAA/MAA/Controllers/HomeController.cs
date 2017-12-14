@@ -81,7 +81,7 @@ namespace MAA.Controllers
                 //Reset model and set message
                 mortgageApprovalApplication = new MortgageApprovalApplication
                 {
-                    Message =
+                    Details =
                         $"Quote No {mortgageApprovalApplication.Id}   " +
                         $"(Value of Home = {mortgageApprovalApplication.ValueOfHome}; " +
                         $"Loan Amount = {mortgageApprovalApplication.LoanAmount}; " +

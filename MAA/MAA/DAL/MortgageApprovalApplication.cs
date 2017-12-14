@@ -11,6 +11,23 @@ namespace MAA.Models
     {
         [NotMapped]
         public string Message { get; set; }
+        [NotMapped]
+        public string Details { get; set; }
+
+        [NotMapped]
+        public bool IsValid
+        {
+            get
+            {
+                //TODO: duplicated code (used in Load custom validation), create method in Helper class and move there
+                decimal comparisonValue = ValueOfHome;
+
+                decimal percent60 = comparisonValue * 0.6m;
+                decimal percent80 = comparisonValue * 0.8m;
+
+                return(LoanAmount >= percent60 && LoanAmount <= percent80);                
+            }
+        }
 
         /// <summary>
         /// Get application by id
