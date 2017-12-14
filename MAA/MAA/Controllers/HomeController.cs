@@ -114,14 +114,18 @@ namespace MAA.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        public IActionResult Details()
+        public IActionResult Details([FromServices] MaaContext maaContext, long id)
         {
-            throw new NotImplementedException();
+            MortgageApprovalApplication mortgageApprovalApplication = MortgageApprovalApplication.Get(maaContext, id);
+            //return View(mortgageApprovalApplication);
+            return View(mortgageApprovalApplication);            
         }
 
-        public IActionResult Delete()
+        public IActionResult Delete([FromServices] MaaContext maaContext, long id)
         {
-            throw new NotImplementedException();
+            MortgageApprovalApplication.Delete(maaContext, id);
+            //return List(maaContext);
+            return RedirectToAction("List","Home");
         }
     }
 }

@@ -1,0 +1,47 @@
+﻿@model MAA.Models.MortgageApprovalApplication
+
+<div>
+    <h4>MortgageApprovalApplication</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ValueOfHome)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ValueOfHome)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.LoanAmount)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.LoanAmount)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TermOfLoan)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TermOfLoan)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.InterestId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.InterestId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.MonthlyRepayment)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MonthlyRepayment)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CreationDatetime)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CreationDatetime)
+        </dd>
+    </dl>
+</div>
+<div>    
+    <a asp-action="List">Back to List</a>
+</div>

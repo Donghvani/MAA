@@ -1,4 +1,6 @@
-﻿@model IEnumerable<MAA.Models.MortgageApprovalApplication>
+﻿<script src="~/lib/jquery/dist/jquery.js"></script>
+
+@model IEnumerable<MAA.Models.MortgageApprovalApplication>
 
 @{
     ViewData["Title"] = "View";
@@ -32,7 +34,7 @@
     </thead>
     <tbody>
     @foreach (var item in Model) {
-        <tr>
+        <tr id="rowId_@item.Id">
             <td>
                 @Html.DisplayFor(modelItem => item.ValueOfHome)
             </td>
@@ -53,9 +55,51 @@
             </td>
             <td>
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a id="deleteApplication_@item.Id" class="deleteApplication">Delete</a>
             </td>
         </tr>
     }
     </tbody>
 </table>
+
+<div id="dialog-confirm" title="Delete" style="display: none">
+    <p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>These items will be permanently deleted and cannot be recovered. Are you sure?</p>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        function deleteApplication(id) {
+            $.ajax({
+                url: "/Home/Delete/" + id,
+                //url: '<%= Url.Action("Delete", "Home") %>',
+                success: function (data) {
+                    $('#rowId_' + id).remove();
+                }
+            });
+        }
+
+        function openConfirmationDialog(id) {
+            $("#dialog-confirm").dialog({
+                resizable: false,
+                height: "auto",
+                width: 400,
+                modal: true,
+                autoOpen: true,
+                buttons: {
+                    "Delete": function () {
+                        deleteApplication(id);
+                        $( this ).dialog( "close" );
+                    },
+                    Cancel: function() {
+                        $( this ).dialog( "close" );
+                    }
+                }
+            });
+        }        
+
+        $('.deleteApplication').click(function (e) {
+            openConfirmationDialog(e.target.id.split('_')[1]);
+        });
+    });
+</script>
